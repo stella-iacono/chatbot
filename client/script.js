@@ -85,7 +85,7 @@ const handleSubmit = async (e) => {
 
 
     //fetch data from server (bots response)
-    const response = await fetch('http://localhost:5000', {
+    const response = await fetch('https://chatbot-zv2i.onrender.com/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -94,6 +94,7 @@ const handleSubmit = async (e) => {
             prompt: data.get('prompt')
         })
     })
+    
 
     clearInterval(loadInterval);
     messageDiv.InnerHTML = '';
