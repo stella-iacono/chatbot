@@ -65,7 +65,7 @@ function chatStripe(isAi, value, uniqueId) {
 //first bot message
 async function fetchFirstMessage() {
     try {
-        const response = await fetch('http://localhost:5000/first-message'); // Replace with your Render URL when deployed
+        const response = await fetch('https://chatbot-zv2i.onrender.com/first-message'); // Replace with your Render URL when deployed
         const data = await response.json();
 
         if (data && data.bot) {
@@ -105,7 +105,7 @@ const handleSubmit = async (e) => {
 
 
     //fetch data from backend (bots response) https://chatbot-zv2i.onrender.com/
-    const response = await fetch('http://localhost:5000/', {
+    const response = await fetch('https://chatbot-zv2i.onrender.com/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
