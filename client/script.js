@@ -62,6 +62,26 @@ function chatStripe(isAi, value, uniqueId) {
     );
 }
 
+//first bot message
+async function fetchFirstMessage() {
+    try {
+        const response = await fetch('http://localhost:5000/first-message'); // Replace with your Render URL when deployed
+        const data = await response.json();
+
+        if (data && data.bot) {
+            // Proceed with the first message if bot data is available
+            chatContainer.innerHTML += chatStripe(true, data.bot);
+        } else {
+            // Handle the case when 'bot' message is missing
+            console.error("No bot message in response.");
+        }
+    } catch (error) {
+        console.error("Error fetching first message:", error);
+    }
+}
+
+//handle user message submission
+
 const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -84,8 +104,8 @@ const handleSubmit = async (e) => {
 
 
 
-    //fetch data from server (bots response)
-    const response = await fetch('https://chatbot-zv2i.onrender.com/', {
+    //fetch data from backend (bots response) https://chatbot-zv2i.onrender.com/
+    const response = await fetch('http://localhost:5000/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -93,11 +113,11 @@ const handleSubmit = async (e) => {
         body: JSON.stringify({
             prompt: data.get('prompt')
         })
-    })
+    });
     
 
     clearInterval(loadInterval);
-    messageDiv.InnerHTML = '';
+    messageDiv.innerHTML = '';
 
     if(response.ok) {
         const data = await response.json();
@@ -111,14 +131,17 @@ const handleSubmit = async (e) => {
 
         alert(err);
 
-    }
+    };
 
-}
+};
 
 form.addEventListener('submit', handleSubmit);
 form.addEventListener('keyup', (e) => {
     if (e.keyCode === 13) {
         handleSubmit(e);
-    }
-})
+    };
+});
+
+//fetch first message
+window.addEventListener("load", fetchFirstMessage) 
 
